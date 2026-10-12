@@ -1,0 +1,15 @@
+{
+  "name": "jamais-vu",
+  "description": "jamais-vu: a premortem that remembers your own costly decisions.",
+  "owner": {
+    "name": "Tarek Mokhtari",
+    "url": "https://github.com/tarek-mokhtari"
+  },
+  "plugins": [
+    {
+      "name": "jamais-vu",
+      "source": ".",
+      "description": "A premortem that remembers your own costly decisions: triage first, then a one-screen check of hard-to-undo plans against your private ledger."
+    }
+  ]
+}

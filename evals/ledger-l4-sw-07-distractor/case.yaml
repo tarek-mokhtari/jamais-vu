@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: ledger-l4-sw-07-distractor
+context:
+  scaffold_script: setup-ledger.sh

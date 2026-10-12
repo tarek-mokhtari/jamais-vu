@@ -1,0 +1,3 @@
+- [ ] `python3 tools/check.py` passes
+- [ ] For pack entries: public source, signals visible before the outcome, a one-day test with a stop criterion, no personal data
+- [ ] For skill changes: which eval cases you ran, before and after

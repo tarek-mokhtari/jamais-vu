@@ -1,0 +1,21 @@
+---
+type: llm
+weight: 3
+---
+Judge whether the agent's review names the failure mechanism that actually sank this plan. The agent saw only the plan below, never the outcome.
+
+Plan the agent reviewed:
+"""
+Next Thursday we replace password login with single sign-on. Customer admins connect their company directory through our identity broker, which accepts any OpenID Connect provider; about 300 organizations asked for it, and some will connect self-hosted directories. To make the switch painless, the first time someone signs in through SSO we look up the existing account whose email matches the token's email claim and link the two automatically, so people keep their projects and roles. We tested the flow with our own directory and three pilot customers: all 412 accounts linked correctly. Organization admins manage billing and can see every project in their organization. Password login stays available for 30 days, then it is removed. The release notes are written, and customer success has webinars booked for launch week.
+"""
+
+Hidden ground truth, what happened next: "Accounts were linked on the email claim, which a customer-managed directory sets freely: it is not proof that the person owns the address. A researcher created a user in a self-hosted directory with the email address of another organization's admin, signed in through SSO, and was linked to that admin's account, with its billing and every project of that organization. Automatic linking was switched off in an emergency, every link made since launch had to be audited, and the affected customers were notified. Accounts should have been keyed on issuer and subject, with linking only after proof that the person owns the address. In the original case, Microsoft confirmed that the email claim is not guaranteed to come from a verified email address, recommended never using it for authorization, and notified the owners of several multi-tenant applications that had consumed unverified email claims."
+
+Source: public case, transposed. Microsoft Security Response Center, "Potential Risk of Privilege Escalation in Azure AD Applications" (20 June 2023), on the anti-pattern reported by Descope ("nOAuth"): the attribute "is not guaranteed to come from a verified email address"; "Microsoft recommends never using the email claim for authorization purposes". https://msrc.microsoft.com/blog/2023/06/potential-risk-of-privilege-escalation-in-azure-ad-applications/ ; OpenID Connect Core 1.0, §5.7: sub and iss "are the only Claims that an RP can rely upon as a stable identifier", and email "MUST NOT be used as unique identifiers". https://openid.net/specs/openid-connect-core-1_0.html
+
+Mechanism to look for: Automatic linking on the token's email claim, through a broker that accepts any OpenID Connect provider, including self-hosted directories that customers control. Whoever administers a directory can put any address in the email claim, so a user from one organization can sign in as an existing account of another, admins included (billing and every project). The pilots used cooperative directories, so they could not show it.
+
+How to grade:
+1. List the distinct risks or concerns in the agent output, in order of first appearance, wherever they appear (a risk list, a "cheapest test" line, prose). Count each distinct concern once. Ignore any decision record printed between BEGIN and END lines.
+2. PASS if one of the first three concerns names this mechanism, or names the plan fact that leads to it and says how that fact makes the plan fail. Paraphrase is fine. Examples that count: the email claim from a customer-controlled or self-hosted directory is not verified, so automatic linking lets one organization take over another's accounts; link on issuer and subject, or require proof of the address; admin accounts make the takeover severe; the pilots only tested honest directories.
+3. FAIL if the mechanism is absent; if it appears only as a generic label with no link to this plan's facts (for example "SSO migrations are risky", "test the login flow", "users may get locked out", "duplicate accounts", "keep a fallback login", with no link to linking on an unverified email claim); or if it first appears as the fourth concern or later.

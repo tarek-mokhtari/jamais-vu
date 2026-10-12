@@ -1,0 +1,8 @@
+# Changes to what runs on users' machines or reads their private folder need the maintainer's review.
+/skills/          @tarek-mokhtari
+/shared/          @tarek-mokhtari
+/packs/           @tarek-mokhtari
+/chat/            @tarek-mokhtari
+/.claude-plugin/  @tarek-mokhtari
+/tools/           @tarek-mokhtari
+/evals/**/*.sh    @tarek-mokhtari

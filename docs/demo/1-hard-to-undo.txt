@@ -1,0 +1,19 @@
+# Case ledger-l3-sw-05-match, with the kit (evals/final/with-ledger.json; Sonnet 5.5, 12 October 2026).
+# The plan keeps whole sentences of evals/ledger-l3-sw-05-match/prompt.md. Its FORECAST line becomes
+# the reply to the check skill's question (skills/jmv-check/SKILL.md, step 3; the "skip" sentence is
+# left out). The answer keeps whole lines of the run's output.
+It's 23:00 and I've been on this incident since 18:00. pg_basebackup has failed twice, apparently on connection limits, so I'll raise max_wal_senders, clear the data directory again and retry. I have a terminal open on each machine; their prompts differ only by the host number. The other on-call engineer signed off an hour ago. Quick check before I run it?
+---
+Before I look for holes:
+(1) what probability (0–100 %) do you give this of working as intended, and by what date?
+(2) What is the most likely reason it fails?
+---
+90% by 2026-12-01 — likely failure: pg_basebackup fails a third time and I hand over a half-done resync
+---
+jamais-vu check · one-way: wiping a data directory by hand can't be undone, and the primary's backups have never been restored.
+consulted: ledger (L2, L1) · taxonomy · packs: software-infra
+Cheapest test: On each terminal, print hostname and `SELECT pg_is_in_recovery()`, and read the exact pg_basebackup error and primary log · 3 min · stop if the host you're about to empty returns `f`, or the error isn't a sender limit.
+Risks:
+1. [L2 ← "the other on-call engineer signed off an hour ago"] You wiped the data directory at 23:00, five hours in, alone, with prompts differing only by host number. It ran on the primary.
+Tripwires:
+- Before any `rm` or empty step, if `pg_is_in_recovery()` isn't `t` on that host, then stop and don't run it.

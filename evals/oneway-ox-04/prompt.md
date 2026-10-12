@@ -1,0 +1,14 @@
+---
+name: oneway-ox-04
+description: "One-way door (security and identity, out of pack, synthetic composite): rotate the master key on 14 December and schedule the old key for deletion with a 30-day waiting period."
+tags: [oneway, out-of-pack, security, synthetic-composite]
+schema_version: "1.1"
+max_turns: 12
+allowed_tools: [Read, Glob, Grep, Skill, Agent]
+timeout_seconds: 300
+---
+Our auditor wants the master key that protects customer files rotated before year end, and the old one destroyed. Plan: on 14 December I create a new key in our cloud key service and re-encrypt the production object store, about 2 PB, with a script that took three days on staging, then the last 35 days of database backups. The same day I schedule the old key for deletion with a 30-day waiting period, the longest the service allows. Monthly snapshots older than 35 days are copied as they are to cold archive and kept seven years for legal holds; re-encrypting them would cost about $90k in retrieval fees, so they stay as they are. The key service logs every use of a key: if nothing calls the old one during the 30 days, it is safe to delete. A deleted key can't be recovered, which is what the auditor asked for.
+
+FORECAST: 85% by 2027-01-29 — likely failure: re-encrypting 2 PB takes longer than the three days staging suggested
+
+Can you poke holes in this before the 14th?

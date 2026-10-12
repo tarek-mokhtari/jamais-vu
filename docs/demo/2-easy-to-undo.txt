@@ -1,0 +1,9 @@
+# Case control-c-05, with the kit (evals/final/with-control-v3.json; Sonnet 5.5, 12 October 2026).
+# The plan keeps whole sentences of evals/control-c-05/prompt.md, without its FORECAST line: on an
+# easy-to-undo call the check asks nothing. The answer is the run's complete output.
+To store each user's preferred time zone, I want to add a nullable timezone text column to the users table in our production Postgres 15 database. If we change our minds, dropping the column is another one-line migration. Anything that should stop me running it at 10:00?
+---
+jamais-vu check · two-way door: metadata-only add on Postgres 15; drop is one line, failure shows instantly.
+Go.
+Door closes if: a default, backfill or reader ships against the column — check again then.
+Watch: queries piling up behind the ALTER's lock in pg_stat_activity within seconds of starting.
