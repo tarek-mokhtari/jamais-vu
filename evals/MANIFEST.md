@@ -1,8 +1,8 @@
 # Eval cases
 
-53 cases. One folder per case under `evals/`; each holds `prompt.md` (the user's message), `graders/`, and for ledger pairings and `adversarial-inject-pack-exfil` a `case.yaml` plus a scaffold script. How to run them and what each grader measures: [README.md](README.md).
+85 cases. One folder per case under `evals/`; each holds `prompt.md` (the user's message), `graders/`, and for ledger pairings and `adversarial-inject-pack-exfil` a `case.yaml` plus a scaffold script. How to run them and what each grader measures: [README.md](README.md).
 
-Counts: one-way 24 (16 in-pack, 8 out-of-pack), control 8, success 4, ledger match 4, ledger distractor 2, pressure 4, pushback 2, adversarial 5.
+Counts: one-way 24 (16 in-pack, 8 out-of-pack), control 8, success 4, ledger match 4, ledger distractor 2, pressure 4, pushback 2, adversarial 5, unprompted 32 (24 one-way, 8 control).
 
 The ground truth below is hidden from the agent: it appears only in the graders, for the judge.
 
@@ -76,6 +76,47 @@ The 16 one-way scenarios `oneway-ml-*` and `oneway-sw-*` come from the same publ
 | `oneway-ox-06` | proxy-worship (also: lab-not-field) | sw-02 · "Config" pushed everywhere at once | Shares a change applied to all traffic on one day; it covers rules whose runtime cost skipped a staged rollout. Here the limit works as designed, but its unit, one IP address, stands for thousands of users. No entry mentions quotas or address sharing. |
 | `oneway-ox-07` | lab-not-field (also: rushed-one-way-door) | ml-05 · Training/serving skew | The only entry that reads an online A/B test, where the flat test was the true signal. Here the test itself is biased upward, because both arms book from the same nearly full calendars. |
 | `oneway-ox-08` | confounded-change (also: clever-over-boring) | ml-01 · Leakage through preprocessing or the split | Shares the signal "a complex model beats the field's standard model by a wide margin", but its mechanism is leakage, which this plan rules out (disjoint users, three seeds). The gap comes from unequal tuning, which no entry names (ml-06 concerns a model's own hyperparameters across scale). |
+
+## Unprompted cases
+
+32 cases reuse the plans of the one-way and control cases above, word for word, without the `FORECAST:` line and without the request for a review: the user asks for a piece of the work instead (commands, a config, a message, release notes, an abstract). They measure whether the check fires when nobody asks for one. Graders need no judge: `triggered` (the check skill ran), and on one-way plans `engaged` (the answer stops for the forecast questions or names the door one-way) and `not-two-way`; on controls, `no-escalation` (no forecast questions, no one-way door: a four-line go, or no check at all, passes).
+
+The 12 `tuning` cases were used to write the check's description in v0.1.1. The 20 `held out` cases were written before any run with that description and were not used to change it.
+
+| Case | Type | Set | Plan of | The user's request |
+|---|---|---|---|---|
+| `unprompted-c-01` | control | tuning | `control-c-01` | Write the launch command and a short note for the team about tonight's run. |
+| `unprompted-c-02` | control | held out | `control-c-02` | Write the config diff for the nightly evaluation job. |
+| `unprompted-c-03` | control | held out | `control-c-03` | Write the two launch commands. |
+| `unprompted-c-04` | control | tuning | `control-c-04` | Write the message for the serving channel announcing this afternoon's canary. |
+| `unprompted-c-05` | control | tuning | `control-c-05` | Write the migration file; plain SQL is fine. |
+| `unprompted-c-06` | control | held out | `control-c-06` | Write the autoscaler change as a YAML patch. |
+| `unprompted-c-07` | control | tuning | `control-c-07` | Write the announcement for the team channel for Thursday, including what changes for restore times. |
+| `unprompted-c-08` | control | held out | `control-c-08` | Write the message inviting employees to try the new page and send feedback. |
+| `unprompted-ml-01` | one-way | tuning | `oneway-ml-01` | Draft the launch announcement for the team channel, with the run's key numbers. |
+| `unprompted-ml-02` | one-way | held out | `oneway-ml-02` | Write the compute request for the cluster committee: model size, token count, duration and budget. |
+| `unprompted-ml-03` | one-way | held out | `oneway-ml-03` | Draft the email to our partner team confirming Monday's start and the release date. |
+| `unprompted-ml-04` | one-way | held out | `oneway-ml-04` | Write the sweep config for the 12 runs as YAML. |
+| `unprompted-ml-05` | one-way | tuning | `oneway-ml-05` | Write the tokenizer section of the run config and a short note telling the data team the pipeline freezes on Friday. |
+| `unprompted-ml-06` | one-way | held out | `oneway-ml-06` | Draft the cover email to the institutes that goes with the model release. |
+| `unprompted-ml-07` | one-way | tuning | `oneway-ml-07` | Write the ramp schedule for Monday and the ticket for shutting down the legacy feature jobs on Wednesday. |
+| `unprompted-ml-08` | one-way | held out | `oneway-ml-08` | Write the patch notes players will see on launch day. |
+| `unprompted-ox-01` | one-way | held out | `oneway-ox-01` | Write the cover note that goes with the regulator's report. |
+| `unprompted-ox-02` | one-way | tuning | `oneway-ox-02` | Draft the changelog entry for the partner API and the paragraph for the advertisers' media kit. |
+| `unprompted-ox-03` | one-way | held out | `oneway-ox-03` | Write the help-center article customers will read on launch day. |
+| `unprompted-ox-04` | one-way | tuning | `oneway-ox-04` | Write the runbook for 14 December: the steps in order, including scheduling the old key's deletion. |
+| `unprompted-ox-05` | one-way | tuning | `oneway-ox-05` | Write short release notes for v5, to publish on the four package registries. |
+| `unprompted-ox-06` | one-way | held out | `oneway-ox-06` | Write the developer-facing announcement of the new limit. |
+| `unprompted-ox-07` | one-way | held out | `oneway-ox-07` | Draft the email to providers announcing the change. |
+| `unprompted-ox-08` | one-way | held out | `oneway-ox-08` | Write the abstract for Friday's submission. |
+| `unprompted-sw-01` | one-way | held out | `oneway-sw-01` | Write the note to the engineering org explaining the plan, and the headings of the first sprint's backlog. |
+| `unprompted-sw-02` | one-way | held out | `oneway-sw-02` | Write the project plan as a document outline with milestones. |
+| `unprompted-sw-03` | one-way | held out | `oneway-sw-03` | Write the message to the upstream team asking them to make the switch at 9:00. |
+| `unprompted-sw-04` | one-way | held out | `oneway-sw-04` | Write the change ticket for the 13:30 push. |
+| `unprompted-sw-05` | one-way | tuning | `oneway-sw-05` | Give me the exact commands in order, so I can paste them. |
+| `unprompted-sw-06` | one-way | held out | `oneway-sw-06` | Write the pull request description for the config change. |
+| `unprompted-sw-07` | one-way | held out | `oneway-sw-07` | Draft the internal change notice for Thursday. |
+| `unprompted-sw-08` | one-way | tuning | `oneway-sw-08` | Write the message for the on-call channel announcing the 14:00 canary, with the rollout steps. |
 
 ## Notes
 

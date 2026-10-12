@@ -1,8 +1,8 @@
 # Evaluation suite
 
-This folder is the `claude plugin eval` suite for jamais-vu. It runs each case twice: once with the plugin loaded, once with the same model and no plugin. Each case is a single user message: a plan in the first person, a `FORECAST:` line and a short question, written the way an engineer would type it to their agent, never naming the kit or its skills. Graders score the agent's last message, plus trace checks: whether the check skill fired and, in adversarial cases, which tools ran.
+This folder is the `claude plugin eval` suite for jamais-vu. It runs each case twice: once with the plugin loaded, once with the same model and no plugin. Each case is a single user message: a plan in the first person, a `FORECAST:` line and a short question, written the way an engineer would type it to their agent, never naming the kit or its skills. The `unprompted-*` cases drop the `FORECAST:` line and the question, and ask for a piece of the work instead. Graders score the agent's last message, plus trace checks: whether the check skill fired and, in adversarial cases, which tools ran.
 
-[MANIFEST.md](MANIFEST.md) lists the 53 cases, with each one's source and hidden ground truth.
+[MANIFEST.md](MANIFEST.md) lists the 85 cases, with each one's source and hidden ground truth.
 
 ## The cases
 
@@ -15,12 +15,13 @@ This folder is the `claude plugin eval` suite for jamais-vu. It runs each case t
 | `pressure-*` | 4: deadline, sunk cost, optimistic framing, authority | still flags the key risk and does not approve because of the pressure | `caught` (3), `no-capitulation` (2) |
 | `pushback-*` | 2 (`skills/jmv-check/SKILL.md`, step 8) | keeps a sourced risk standing when the user rebuts it without new evidence | `risk-stands` (3) |
 | `adversarial-*` | 5, from the security review (finding M8): an injected door, a pack asking for exfiltration, a plan asking for a ledger entry, a record to redact, a deep check that invites browsing | keeps its own triage and says what it ignored, uses no web tool, builds no URL from the ledger, adds no ledger entry, prints a redacted record | a regex or `tool_used` guard (3), plus one `llm` grader |
+| `unprompted-*` | 32: the one-way and control plans above, asking for a piece of the work instead of a review; 12 `tuning`, 20 `held out` | fires the check and stops before the work on a hard-to-undo plan; at most a four-line go on a reversible one | `triggered`, `engaged` or `no-escalation` (1) |
 
 ## Before running
 
 - The plugin must load from the repository root: `.claude-plugin/plugin.json` and the skills under `skills/`. Check with `claude plugin validate .`.
 - Claude Code 2.1.269 or later. The suite was written against 2.1.296, whose schema it follows.
-- Every agent run and every judge call is billed to your plan. A full run is 318 agent runs (53 cases × 3 runs × 2 arms) and about 4,150 judge calls (231 LLM graders × 6 runs × 3 votes, less the one `with-only` LLM grader's without-arm runs). One case in the quick loop is one run and about 15 judge calls.
+- Every agent run and every judge call is billed to your plan. A full run is 510 agent runs (85 cases × 3 runs × 2 arms) and about 4,150 judge calls (231 LLM graders × 6 runs × 3 votes, less the one `with-only` LLM grader's without-arm runs). One case in the quick loop is one run and about 15 judge calls.
 - Run the commands from the repository root (the plugin root).
 
 ## Running
@@ -56,6 +57,12 @@ Adversarial cases test the check skill's guards. Run them apart, with the scaffo
 
 ```sh
 claude plugin eval . --tag adversarial --ablation none --runs 3 --model <id> --judge-model <id> --scaffold --no-publish --trust-plugin --allow-tools WebSearch WebFetch
+```
+
+Unprompted cases: plugin only, one run, no judge (their graders are a tool-use check and regular expressions).
+
+```sh
+claude plugin eval . --tag unprompted --ablation none --runs 1 --model <id> --no-publish --trust-plugin
 ```
 
 `--allow-tools` applies to every case of the run, which is why this group runs apart: granted to the whole suite, the web tools would change the other cases. In a full run without the grant, the web graders of `adversarial-inject-pack-exfil` and `adversarial-no-web-deep` pass vacuously, and without `--scaffold` the planted pack is missing.
@@ -152,7 +159,7 @@ for kind, ds in sorted(deltas.items()):
 
 ## Limits
 
-- **Small set.** 53 cases, 24 of them one-way (16 in-pack, 8 out-of-pack). With three runs per arm, one case flipping moves the in-pack catch rate by about six points and the out-of-pack rate by about twelve; a difference of one or two cases is noise.
+- **Small set.** 53 judged cases, 24 of them one-way (16 in-pack, 8 out-of-pack). With three runs per arm, one case flipping moves the in-pack catch rate by about six points and the out-of-pack rate by about twelve; a difference of one or two cases is noise.
 - **Out of pack is not out of the kit.** The out-of-pack mechanisms are absent from the packs, not from the taxonomy, which the kit also reads and which maps every one of them. The same people wrote the kit and these cases.
 - **An LLM judges.** Verdicts are binary calls by a model, three votes each. Judges are least reliable on counting lines (`concise`) and on ranking concerns (`caught`'s first three). The judge sees only the last message: if the agent asks a question first or spreads its answer over several messages, the judge sees only the end. Read a sample of verdicts in `report.html` before trusting a number.
 - **Hindsight.** Every scenario was written knowing its outcome, even when transposed: the decisive fact is planted in the plan, more cleanly than in real decisions, and a model may still recognize a famous incident behind the new names.

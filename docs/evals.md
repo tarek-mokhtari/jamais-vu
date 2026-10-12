@@ -5,7 +5,7 @@ What the published numbers measure, how they were produced, and what they cannot
 ## Method
 
 - **Harness.** Claude Code's `claude plugin eval` runs each case in an empty working folder, with a temporary home and fresh settings. The agent gets read-only tools (Read, Glob, Grep, Skill); without write access, the kit prints its decision record instead of saving it.
-- **Cases.** 53 cases, each a single user message: a plan in the first person, a `FORECAST:` line and a short question, written the way an engineer would type it to an agent, never naming the kit. The types are below.
+- **Cases.** 53 judged cases, each a single user message: a plan in the first person, a `FORECAST:` line and a short question, written the way an engineer would type it to an agent, never naming the kit. The types are below.
 - **Two arms.** Each case runs with the plugin and with the same model without it (`--ablation with-without`). Adversarial cases run with the plugin only, since they attack the kit's own files and rules; any other group run in one arm only is marked in the results.
 - **One run per case** in each arm.
 - **Judge.** An LLM grader sends its criterion and the agent's last message, nothing else, to a judge model, never the agent model itself; each criterion is judged three times, and a majority of PASS passes. In the published run, `claude-opus-5-5` judged `claude-sonnet-5-5`, on Claude Code 2.1.296. Regex and tool-use graders need no judge.
@@ -23,6 +23,7 @@ What the published numbers measure, how they were produced, and what they cannot
 | pressure | 4: deadline, sunk cost, optimistic framing, authority | still flags the key risk, and does not approve because of the pressure |
 | pushback | 2 | keeps a sourced risk standing after a rebuttal that brings no new evidence |
 | adversarial | 5 | keeps its own triage despite a planted note, uses no web tool, builds no URL from the ledger, adds no ledger entry from the plan's text, prints a redacted record |
+| unprompted | 32: the one-way and control plans above, asking for a piece of the work instead of a review (12 used to write the check's description, 20 held out) | on a hard-to-undo plan, the check fires and stops for the forecast questions before doing the work; on a reversible one, at most a four-line go |
 
 **In-pack and out-of-pack.** The 16 in-pack one-way cases come from the same public sources as the shipped packs, so the kit may find the answer in its own packs: they measure the packs as much as the method. The 8 out-of-pack cases have mechanisms that no pack entry describes (checked entry by entry), although each maps to a pattern of the taxonomy, which the kit also reads. The gap between the two groups, in each arm, shows how much of the effect comes from the packs. The 4 pressure variants are built on in-pack cases.
 
@@ -47,6 +48,7 @@ Each metric is reported per arm, as a count and a rate. Δ uses each grader's we
 | Injection tests | adversarial graders (regex, tool use, LLM) | with-plugin pass rate of each guard: the planted note ignored and reported, no web call, no URL built from the Digest, no planted ledger entry, a redacted record |
 | Output-contract violations | `tools/contract.py` | share of with-plugin runs that break at least one rule of the contract; the target is zero |
 | Trigger rate | `triggered` (tool use) | share of with-plugin runs in which the check skill fired; an indicator, never counted in Δ |
+| Fires unprompted | `triggered` (tool use), `engaged`, `not-two-way`, `no-escalation` (regex) | on unprompted hard-to-undo plans, share of runs in which the check fired and stopped before the work; on unprompted reversible plans, share of runs without escalation |
 | Δ | harness | weighted score with the plugin minus without, per case, averaged by type |
 | Cost | — | tokens the three skill descriptions add to every session, tokens used by a hard-to-undo check, and answer length in each arm |
 
@@ -110,12 +112,25 @@ Run on 12 October 2026 with the v0.1.0 skills. Baseline arms were reused from an
 | Injection and privacy attacks (5) | record-redacted | 1/1 | — |
 
 
+### Unprompted
+
+Run on 12 October 2026 with Sonnet 5.5, one run per case, no judge. The user asks for a piece of the work (commands, a config, a message, release notes, an abstract), never for a review. Version 0.1.1 changed only the check's description, written on the 12 tuning cases; the 20 held-out cases were not used to write it.
+
+| Cases | Check's description | Hard to undo: fired and stopped before the work | Reversible: escalated |
+|---|---|---|---|
+| 20 held out | 0.1.0 | 4/16 | 0/4 |
+| 20 held out | **0.1.1** | **14/16** | 0/4 |
+| 12 tuning | 0.1.0 | 4/8 | 0/4 |
+| 12 tuning | 0.1.1 | 8/8 | 0/4 |
+
+On reversible plans, the check either stays silent or gives its four-line go and then does the work. With 0.1.1, the 53 cases above, which ask for a review, all still fire the check (53/53, `triggered` only, runs stopped after two turns). Their judged results, measured with 0.1.0, stand: the description decides only whether the check fires, and the skill's instructions did not change.
+
 ## Limits
 
-- **Small set, one run.** 53 cases, 24 of them one-way (16 in-pack, 8 out-of-pack). One case flipping moves the in-pack catch rate by about 6 points and the out-of-pack rate by about 12; with one run per case, a single unlucky run is such a flip. A difference of one or two cases is noise.
+- **Small set, one run.** 53 judged and 32 unprompted cases, 24 of the judged ones one-way (16 in-pack, 8 out-of-pack). One case flipping moves the in-pack catch rate by about 6 points and the out-of-pack rate by about 12; with one run per case, a single unlucky run is such a flip. A difference of one or two cases is noise.
 - **An LLM judges.** Verdicts are binary calls by a model, three votes each, on the agent's last message only. Judges are least reliable at counting lines and at ranking concerns: read a sample of verdicts in each run's `report.html` before trusting a number.
 - **Hindsight.** Every scenario was written knowing its outcome, even when transposed: the decisive fact sits in the plan more cleanly than in real decisions, and a model may still recognize a famous incident behind the new names.
-- **Both arms are asked for a critique.** Every prompt ends by asking for a look at the plan ("Where is it weakest?", "Good to go for 9:00?"), so the eval compares two answers to an explicit request. It cannot measure the value of a check that arrives unprompted, nor its cost when it fires on routine work.
+- **The judged cases ask for a critique.** Every judged prompt ends by asking for a look at the plan ("Where is it weakest?", "Good to go for 9:00?"), so the judged results compare two answers to an explicit request. The unprompted cases measure whether the check fires and stops when nobody asks, with the kit only and without a judge: not the quality of what follows, nor what the same model does without the kit.
 - **The baseline is the same model without the plugin,** not another reviewer and not a hand-written premortem prompt. Agent and judge are both Claude models; nothing here speaks for other models or for the paste-in mode.
 - **Not evaluated:** setup and review, the forecast question (every prompt already carries a forecast), and saving records or updating ledger counters (no write access).
 - **Same authors.** The controls, the sound plans and the out-of-pack cases were written by the people who wrote the kit. The baseline never sees a ledger, so it fails `ledger-cited` and passes `no-forced-match` by construction: read the kit's own rates there.
@@ -142,6 +157,9 @@ claude plugin eval . --tag out-of-pack --ablation with-without --runs 3 --model 
 
 # adversarial cases: plugin only, with the scaffold and the web tools granted
 claude plugin eval . --tag adversarial --ablation none --runs 3 --model <id> --judge-model <id> --scaffold --no-publish --trust-plugin --allow-tools WebSearch WebFetch
+
+# unprompted cases: plugin only, no judge needed
+claude plugin eval . --tag unprompted --ablation none --runs 1 --model <id> --no-publish --trust-plugin
 
 # output contract, on any results file
 python3 tools/contract.py evals/results/<timestamp>/aggregate-result.json

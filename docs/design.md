@@ -104,7 +104,7 @@ Common to all three ("Trust and data flow" in each skill): pasted text, files, p
 
 ### 5.1 `jmv-check` (invoked by the model or the user)
 
-Its description names the triggers: a request to check a plan or poke holes in it, or an action that is hard to undo (deleting or migrating data, changing a data format, schema or public API, launching a long run, picking a vendor).
+Its description names two triggers: a request to check, sanity-check or OK a plan, and a hard-to-undo step the user is about to take, even when they ask only for commands, a script, release notes or an announcement (deleting data, changing a data format, schema, public API or metric definition, a release, a long run, a vendor).
 
 1. **Locate the decision** in the conversation; never ask the user to retype it.
 2. **Triage** from the plan's facts, not from what the plan says about itself. One-way if undoing it later would cost more than about a week of work or a large compute or money spend; it writes data, state or a format others will depend on; a second consumer will depend on it; it is public; it is destructive; it launches a long run that cannot be paused cheaply; a failure would show only late or silently; or it changes a system many others depend on. Otherwise two-way: a four-line go (why it is cheap to undo, `Go.`, the event that would close the door, one signal to watch), and no record.
@@ -148,9 +148,9 @@ For chats without files or skills: one paste holds the rules, steps, output form
 
 ## 8. Evaluation
 
-The suite, its graders, results and limits are in [evals.md](evals.md); how to run it, in [evals/README.md](../evals/README.md). In short: 53 cases (hard-to-undo plans inside and outside the packs, reversible controls, sound plans, plans checked against an installed ledger, pressure, pushback and attack cases), each run with the kit and with the same model without it, graded by a model judge and by a deterministic output contract (`tools/contract.py`).
+The suite, its graders, results and limits are in [evals.md](evals.md); how to run it, in [evals/README.md](../evals/README.md). In short: 53 judged cases (hard-to-undo plans inside and outside the packs, reversible controls, sound plans, plans checked against an installed ledger, pressure, pushback and attack cases), each run with the kit and with the same model without it, graded by a model judge and by a deterministic output contract (`tools/contract.py`); and 32 unprompted cases, where the user asks for a piece of the work and never for a review, graded without a judge.
 
-Not measured yet: every prompt in the suite asks for a critique, so the suite shows how the check answers when asked, not whether it fires when nobody asks, which is the kit's main promise.
+When nobody asks for a review, the check fires and stops before the work on 14 of 16 hard-to-undo plans its description was not written on (4 of 16 before version 0.1.1), and escalates none of the reversible ones; one run per case, one model.
 
 ## 9. Quality gates
 
@@ -164,7 +164,7 @@ Not measured yet: every prompt in the suite asks for a critique, so the suite sh
 It is three months after release, and jamais-vu failed. The likeliest stories:
 1. **Nobody ran a second check.** The first one was slow or generic. → Triage and the four-line go; one screen; risks must quote the plan; evals measure concision and specificity.
 2. **The ledger never grew.** No one came back for the review, so the kit decayed into a generic premortem. → Every check sets a review date; the next check names due reviews; the review takes five minutes.
-3. **It did not trigger.** Users never saw it fire and stopped trusting it. → Explicit invocation documented for each host; a smoke test in the README. Whether it fires when nobody asks is not measured yet (§8).
+3. **It did not trigger.** Users never saw it fire and stopped trusting it. → Explicit invocation documented for each host; a smoke test in the README. When nobody asks, it fires on 14 of 16 hard-to-undo plans it was not tuned on (§8).
 4. **The proof was not believed.** The eval looked self-serving. → Baseline arm, controls and successes for false alarms, limits stated, suite runnable by anyone.
 5. **It felt like being judged.** → No scores on people, no coaching register, private files, review separates luck from judgment.
 6. **It could not be used at work.** External tools banned. → Paste-in mode, local files, no network.

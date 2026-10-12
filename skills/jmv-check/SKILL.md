@@ -1,10 +1,10 @@
 ---
 name: jmv-check
-description: 'Use when the user asks to check, sanity-check or poke holes in a plan or decision, or is about to do something hard to undo: delete or migrate data, change a data format, schema or public API, launch a long run, pick a vendor. Easy-to-undo calls get a four-line go; hard ones a premortem.'
+description: 'Use when asked to check, sanity-check or OK a plan, and before helping with a hard-to-undo step, even if asked only for commands, a script, release notes, an announcement: deleting data, changing a data format, schema, public API or metric definition, release, long run, vendor. Easy: four-line go.'
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # jamais-vu check

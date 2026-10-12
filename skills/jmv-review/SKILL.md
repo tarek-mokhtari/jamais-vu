@@ -4,7 +4,7 @@ description: Use only when the user asks to review a decision recorded by jamais
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # jamais-vu review
