@@ -52,7 +52,7 @@ Each metric is reported per arm, as a count and a rate. Δ uses each grader's we
 
 ## Results
 
-Final pass on 12 October 2026, skills v0.1 (commit history in the release notes). Baseline arms reused from the first pass where the prompt and graders did not change. Pass counts per grader:
+Run on 12 October 2026 with the v0.1.0 skills. Baseline arms were reused from an earlier run of the suite where the prompt and graders had not changed. Pass counts per grader:
 
 | Group | Grader | With the kit | Same model, no kit |
 |---|---|---|---|

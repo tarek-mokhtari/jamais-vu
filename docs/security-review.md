@@ -4,8 +4,8 @@ A summary of the security and privacy review run before the first release, and o
 
 ## Method
 
-- On 12 October 2026, a separate model instance reviewed the repository (branch `v0.1`, commit `fe05d60`) against the threat model below: the skills and their references, the packs, the paste-in prompts, the maintainer tools, CI, the manifests and templates, and the eval suite with its scaffold scripts.
-- It read files and ran a few scratch tests outside the repository, and changed nothing. The fixes came afterwards; each status below was checked against the files of v0.1.
+- On 12 October 2026, before the v0.1.0 release, a separate model instance reviewed the repository against the threat model below: the skills and their references, the packs, the paste-in prompts, the maintainer tools, CI, the manifests and templates, and the eval suite with its scaffold scripts.
+- It read files and ran a few scratch tests outside the repository, and changed nothing. The fixes came afterwards; each status below was checked against the files of v0.1.0.
 - This is a model-assisted review, not an independent human audit and not a penetration test.
 
 ## Threat model
@@ -81,5 +81,5 @@ The grep covers the instructions only: the shipped packs under `skills/jmv-check
 ## What this review does not show
 
 - Every guard above is an instruction to a model. The adversarial cases show whether the instructions held in a few runs of one model family, not that they always hold; your agent's permission settings are the enforcement.
-- A model reviewed a kit written with models, so blind spots may be shared. An independent human review is welcome: see [SECURITY.md](../SECURITY.md).
+- The review was model-assisted (see Method), so it may miss what an independent auditor would catch. An independent human review is welcome: see [SECURITY.md](../SECURITY.md).
 - Hosts' permission systems, sandboxes and same-name skill precedence were not tested. Whether the eval harness counts tool calls made inside a sub-agent was not checked.

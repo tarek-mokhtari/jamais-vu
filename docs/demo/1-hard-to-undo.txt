@@ -1,4 +1,4 @@
-# Case ledger-l3-sw-05-match, with the kit (evals/final/with-ledger.json; Sonnet 5.5, 12 October 2026).
+# Case ledger-l3-sw-05-match, with the kit (eval run of 12 October 2026, Sonnet 5.5).
 # The plan keeps whole sentences of evals/ledger-l3-sw-05-match/prompt.md. Its FORECAST line becomes
 # the reply to the check skill's question (skills/jmv-check/SKILL.md, step 3; the "skip" sentence is
 # left out). The answer keeps whole lines of the run's output.
