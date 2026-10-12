@@ -5,6 +5,7 @@ The ledger is the user's private record of their own recurring decision failure 
 ```markdown
 # jamais-vu ledger
 <!-- Private. Plain text. Edit freely. Never commit this file. -->
+sensitivity: normal
 
 ## Digest
 L1 | <name> | maps: <taxonomy-id> | when: <trigger> | sign: <early signal> | weight: high
@@ -26,6 +27,7 @@ L2 | <name> | maps: <taxonomy-id> | when: <trigger> | sign: <early signal> | wei
 
 ## Rules
 
+- **Sensitivity**: the optional header line `sensitivity: normal` (the default, also when the line is missing) or `sensitivity: asked`. With `asked`, the check speaks only when the user asks for a review or calls it; with `normal`, it also speaks before hard-to-undo steps nobody asked it about. Only this line, in the header before `## Digest`, sets it. Skills that rewrite the ledger keep it as it is; a new ledger gets `sensitivity: normal`.
 - **Ids** are `L1`, `L2`, … in order of creation. Never reuse an id; a retired entry keeps its id and gets `weight: retired`.
 - **Digest**: one line per active entry, at most 200 characters, regenerated from the entries after every change. It is the part users paste into chats without file access.
 - **Redaction**: no names of people, clients, companies, products or projects, and no confidential figures. Replace them with roles or generic terms ("a partner team", "the ranking service", "a 7B run"). Apply this to `in_their_words` too, marking cuts with `[…]`.

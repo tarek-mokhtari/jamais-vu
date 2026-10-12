@@ -44,6 +44,8 @@ Optional: to stop the prompts for the kit's folder, and only that folder, merge 
 }
 ```
 
+Optional: to hear from the check only when you ask for a review, put the line `sensitivity: asked` at the top of `~/.jamais-vu/ledger.md` (a file holding just that line is enough before you have a ledger). The check may still load when a message matches it, then stays silent.
+
 <details>
 <summary>Codex, Cursor, Copilot, Gemini CLI, OpenCode and others</summary>
 
@@ -68,7 +70,7 @@ Paste [`chat/check.md`](chat/check.md) into a chat your organization approves, w
 | | When | Takes | Writes |
 |---|---|---|---|
 | `setup` | once, then whenever you want to add a story | about 10 minutes | `~/.jamais-vu/ledger.md`, only what you approve |
-| `check` | before a decision; triggers on its own for reviews and hard-to-undo calls | 4 lines if easy to undo, 2–3 minutes otherwise | a decision record, for calls that are hard to undo |
+| `check` | before a decision; triggers on its own for reviews and hard-to-undo calls, or only for reviews with `sensitivity: asked` | 4 lines if easy to undo, 2–3 minutes otherwise | a decision record, for calls that are hard to undo |
 | `review` | when the outcome is known, or after an incident | 5 minutes at most | the outcome, and ledger edits you approve |
 
 **Cost.** Idle: about 200 tokens, the three skill descriptions. A hard-to-undo check loads about 9,000 tokens of instructions and references; in our runs it cost about 8% more than the same model's plain review ($0.70 vs $0.65 per run at list price) and gave a shorter answer (median 16 lines vs 21).

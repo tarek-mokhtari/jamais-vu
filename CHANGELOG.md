@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3 — 2026-10-13
+A switch: `sensitivity: asked` at the top of the ledger makes the check speak only when the user asks for a review (`normal`, the default, keeps the current behavior). Measured: silent in 4 of 4 cases where only the work was asked, as usual in 2 of 2 where a review was asked, no change with the default setting. Known limit: a plan that asks the agent to skip checks, or states the setting itself, still kept the check silent (2 of 2); see the limits in docs/evals.md. New eval cases: `sensitivity-*` (8).
+
 ## 0.1.2 — 2026-10-12
 Consistency fixes, no change to triage or the premortem. The review's verdict reads `process gap` everywhere (the record format said `flawed`). A check without a fresh context, and the paste-in mode, now record `forecast_kit: none (no fresh context)` instead of an estimate that could not be blind; the review reads it as no estimate, and the check's answer mentions a sealed estimate only when one exists. New eval cases: six routine releases with no request for a review (`unprompted-r-*`): no forecast questions on any of them.
 

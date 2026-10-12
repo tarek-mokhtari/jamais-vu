@@ -4,7 +4,7 @@ description: Use only when the user explicitly asks to set up jamais-vu or to bu
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 # jamais-vu setup
@@ -55,7 +55,7 @@ Weights: an incident from the last two months gets `medium` at most, however pai
 Show the proposed entries and ask the user to approve, edit or drop each one. Save nothing without an explicit yes.
 
 ### 5. Write the ledger
-Create `<home>/.jamais-vu/` if needed, readable by the user only: if you can run a command, `mkdir -p -m 700 <path>`; otherwise ask the user once to run `chmod 700 ~/.jamais-vu`. Write `ledger.md`: the header, the regenerated `## Digest` (one line per active entry), then the entries. Say which file you are writing. If the write is refused or impossible, print the whole file between `----- BEGIN JAMAIS-VU LEDGER -----` and `----- END JAMAIS-VU LEDGER -----` and tell the user where to save it.
+Create `<home>/.jamais-vu/` if needed, readable by the user only: if you can run a command, `mkdir -p -m 700 <path>`; otherwise ask the user once to run `chmod 700 ~/.jamais-vu`. Write `ledger.md`: the header (a new ledger gets `sensitivity: normal`; keep an existing `sensitivity:` line as it is), the regenerated `## Digest` (one line per active entry), then the entries. Say which file you are writing. If the write is refused or impossible, print the whole file between `----- BEGIN JAMAIS-VU LEDGER -----` and `----- END JAMAIS-VU LEDGER -----` and tell the user where to save it.
 
 ### 6. Close (one line)
 Suggest trying the check on a small decision first, to see the fast path, then on the next decision that is hard to undo.
