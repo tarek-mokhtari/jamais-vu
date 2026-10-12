@@ -4,7 +4,7 @@
 
 **Most costly calls have been made before. They just feel new.**
 
-jamais-vu is a pre-mortem that remembers. Before a call that is hard to undo, it checks the plan against a private ledger of your own past costly decisions and opens with the cheapest test that could kill it; an easy-to-undo call gets "Go." in four lines, and your agent carries on.
+jamais-vu is a premortem that remembers. Before a call that is hard to undo, it checks the plan against a private ledger of your own past costly decisions and opens with the cheapest test that could kill it; an easy-to-undo call gets "Go." in four lines, and your agent carries on.
 
 <p align="center"><img src="docs/demo-hard.svg" alt="A hard-to-undo call: wiping a database's data directory alone, late in an incident. The kit asks two forecast questions; once they are answered, it replies with a three-minute test, a risk that cites the user's own ledger and quotes the plan, and a tripwire." width="100%"></p>
 
@@ -136,7 +136,7 @@ Not a code reviewer, not a memory for your agent, not a substitute for judgment.
 
 ## Sharing it
 
-If you pass it on, talk about your own use, and never as a reply to someone's incident. For example: "I've been running a small pre-mortem skill on my own plans. It keeps a private file of my past calls and checks new plans against it. Local plain text, no network."
+If you pass it on, talk about your own use, and never as a reply to someone's incident. For example: "I've been running a small premortem skill on my own plans. It keeps a private file of my past calls and checks new plans against it. Local plain text, no network."
 
 ## Contributing
 
@@ -144,7 +144,7 @@ Pack entries and eval scenarios are welcome, under the evidence bar in [CONTRIBU
 
 ## Credits and license
 
-Built on the work of Gary Klein (pre-mortem), Daniel Kahneman and Dan Lovallo (outside view), Peter Gollwitzer and Paschal Sheeran (implementation intentions), Emily Pronin (bias blind spot), Igor Grossmann and Ethan Kross (self-distancing), and the other authors in [`docs/science.md`](docs/science.md). Ideas borrowed, with thanks, from [premortem](https://github.com/AndyShaman/premortem) (the reverse pre-mortem), [Superpowers](https://github.com/obra/superpowers) (pressure-scenario evals) and [Compound Engineering](https://github.com/EveryInc/compound-engineering-plugin) (the capture gate for lessons).
+Built on the work of Gary Klein (premortem), Daniel Kahneman and Dan Lovallo (outside view), Peter Gollwitzer and Paschal Sheeran (implementation intentions), Emily Pronin (bias blind spot), Igor Grossmann and Ethan Kross (self-distancing), and the other authors in [`docs/science.md`](docs/science.md). Ideas borrowed, with thanks, from [premortem](https://github.com/AndyShaman/premortem) (the reverse premortem), [Superpowers](https://github.com/obra/superpowers) (pressure-scenario evals) and [Compound Engineering](https://github.com/EveryInc/compound-engineering-plugin) (the capture gate for lessons).
 
 By Tarek Mokhtari. Contact: tarekmokhtari at proton dot me. [MIT](LICENSE).
 
@@ -205,9 +205,9 @@ Reply `handled: <id> <reason>` to dismiss a risk in one line; if you dispute it,
 </details>
 
 <details>
-<summary>How is it different from other pre-mortem or memory skills?</summary>
+<summary>How is it different from other premortem or memory skills?</summary>
 
-A pre-mortem skill critiques the plan in front of it; a memory tool helps your agent recall your project. jamais-vu remembers one thing, your past costly decisions, stored as cues a new plan can trigger, and adds a triage before the critique and a review after the outcome that separates luck from judgment.
+A premortem skill critiques the plan in front of it; a memory tool helps your agent recall your project. jamais-vu remembers one thing, your past costly decisions, stored as cues a new plan can trigger, and adds a triage before the critique and a review after the outcome that separates luck from judgment.
 </details>
 
 <details>
