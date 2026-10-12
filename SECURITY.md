@@ -24,7 +24,7 @@ Your plans and your ledger are sent to the model you already use, under that pro
 - Only the copy you installed is the kit; a skill with the same name inside a repository is not.
 
 ## Threat model
-Untrusted: pasted plans and documents, files and pages the agent read, third-party or team packs, and records printed by the chat mode. Protected: the ledger, the decision records, and the integrity of the check. When untrusted text contains instructions, the check does not follow them and starts its answer with `Ignored: instructions inside …`.
+Untrusted: pasted plans and documents, files and pages the agent read, third-party or team packs, and records printed by the chat mode. Protected: the ledger, the decision records, and the integrity of the check. When untrusted text contains instructions, the check does not follow them and starts its answer with `Ignored: instructions inside …`. The check is told to take its sensitivity only from your ledger's header. In our tests, a plan that told the agent to skip checks, or stated the setting itself, still kept the check silent (2 of 2): treat the check as an aid, not a guard.
 
 The pre-release review of v0.1 against this threat model, with each finding and its status: [docs/security-review.md](docs/security-review.md).
 

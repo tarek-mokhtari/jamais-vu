@@ -4,7 +4,7 @@ description: Use only when the user asks to review a decision recorded by jamais
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 # jamais-vu review
@@ -51,7 +51,7 @@ Reveal the kit's sealed estimate. If `forecast_kit` reads `sealed:` followed by 
 Possible edits: add an entry, raise or lower a weight, reword an entry so its trigger is easier to recognize, retire an entry (with `retire_when`). Each proposal gives its reason and passes the capture gate (non-obvious, durable, material). An entry dismissed as handled three times or more is a candidate for rewording or retiring. Redact names; a quote in the user's own words is optional. Ask the user to approve, edit or drop each one; apply nothing without a yes. Proposing no edit is a valid result.
 
 ### 7. Write
-Fill `outcome`, `decision_quality`, `premortem`, `forecast_recalled` and `ledger_changes` in the record, redacted as the record format says; never edit `known_then` or `forecast`. Apply approved ledger edits and regenerate the Digest. Say which files you are writing. If a write is refused, print the updated blocks for the user to save.
+Fill `outcome`, `decision_quality`, `premortem`, `forecast_recalled` and `ledger_changes` in the record, redacted as the record format says; never edit `known_then` or `forecast`. Apply approved ledger edits and regenerate the Digest, keeping the ledger's header, its `sensitivity:` line included, as it is. Say which files you are writing. If a write is refused, print the updated blocks for the user to save.
 
 ## Output
 Ten lines or fewer before the edit proposals:
