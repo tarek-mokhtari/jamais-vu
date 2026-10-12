@@ -73,7 +73,7 @@ Capture gate for any entry, borrowed from Compound Engineering's compound step: 
 
 ### 4.2 Record format
 
-Defined in [`shared/record-format.md`](../shared/record-format.md). The chat mode prints the same block, so `review` reads records from either mode. The check fills in the decision, the door and why, what was known then, the user's forecast, the kit's sealed blind estimate, the cheapest test, the risks with their plan quotes, the tripwires and the review date. The review adds the outcome, the decision quality, the premortem score, the user's recalled forecast and the ledger changes.
+Defined in [`shared/record-format.md`](../shared/record-format.md). The chat mode prints the same block, so `review` reads records from either mode. The check fills in the decision, the door and why, what was known then, the user's forecast, the kit's sealed blind estimate (`none` without a fresh context), the cheapest test, the risks with their plan quotes, the tripwires and the review date. The review adds the outcome, the decision quality, the premortem score, the user's recalled forecast and the ledger changes.
 
 ### 4.3 Pack format (`packs/<name>.md`, shipped or custom)
 
@@ -148,7 +148,7 @@ For chats without files or skills: one paste holds the rules, steps, output form
 
 ## 8. Evaluation
 
-The suite, its graders, results and limits are in [evals.md](evals.md); how to run it, in [evals/README.md](../evals/README.md). In short: 53 judged cases (hard-to-undo plans inside and outside the packs, reversible controls, sound plans, plans checked against an installed ledger, pressure, pushback and attack cases), each run with the kit and with the same model without it, graded by a model judge and by a deterministic output contract (`tools/contract.py`); and 32 unprompted cases, where the user asks for a piece of the work and never for a review, graded without a judge.
+The suite, its graders, results and limits are in [evals.md](evals.md); how to run it, in [evals/README.md](../evals/README.md). In short: 53 judged cases (hard-to-undo plans inside and outside the packs, reversible controls, sound plans, plans checked against an installed ledger, pressure, pushback and attack cases), each run with the kit and with the same model without it, graded by a model judge and by a deterministic output contract (`tools/contract.py`); and 38 unprompted cases, where the user asks for a piece of the work and never for a review, graded without a judge.
 
 When nobody asks for a review, the check fires and stops before the work on 14 of 16 hard-to-undo plans its description was not written on (4 of 16 before version 0.1.1), and escalates none of the reversible ones; one run per case, one model.
 

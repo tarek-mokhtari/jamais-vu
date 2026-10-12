@@ -4,7 +4,7 @@ description: Use only when the user explicitly asks to set up jamais-vu or to bu
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # jamais-vu setup

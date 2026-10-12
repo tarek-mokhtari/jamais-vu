@@ -46,7 +46,7 @@ door_why: <one line>
 known_then: <1-3 lines: what I know now, from my message>
 forecast: <p>% by YYYY-MM-DD · likely failure: <my words>   (or: none given)
 forecast_revised:
-forecast_kit: sealed:<your own blind estimate for the third-person plan: the whole-number percentage in base64, four characters at most>
+forecast_kit: none (no fresh context)
 cheapest_test: <test> · <cost> · stop if <signal>
 risks: <id> ← "<plan quote, 12 words at most>"; …
 tripwires: <date or event>: if <observable> then <action>; …

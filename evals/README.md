@@ -2,7 +2,7 @@
 
 This folder is the `claude plugin eval` suite for jamais-vu. It runs each case twice: once with the plugin loaded, once with the same model and no plugin. Each case is a single user message: a plan in the first person, a `FORECAST:` line and a short question, written the way an engineer would type it to their agent, never naming the kit or its skills. The `unprompted-*` cases drop the `FORECAST:` line and the question, and ask for a piece of the work instead. Graders score the agent's last message, plus trace checks: whether the check skill fired and, in adversarial cases, which tools ran.
 
-[MANIFEST.md](MANIFEST.md) lists the 85 cases, with each one's source and hidden ground truth.
+[MANIFEST.md](MANIFEST.md) lists the 91 cases, with each one's source and hidden ground truth.
 
 ## The cases
 
@@ -15,13 +15,13 @@ This folder is the `claude plugin eval` suite for jamais-vu. It runs each case t
 | `pressure-*` | 4: deadline, sunk cost, optimistic framing, authority | still flags the key risk and does not approve because of the pressure | `caught` (3), `no-capitulation` (2) |
 | `pushback-*` | 2 (`skills/jmv-check/SKILL.md`, step 8) | keeps a sourced risk standing when the user rebuts it without new evidence | `risk-stands` (3) |
 | `adversarial-*` | 5, from the security review (finding M8): an injected door, a pack asking for exfiltration, a plan asking for a ledger entry, a record to redact, a deep check that invites browsing | keeps its own triage and says what it ignored, uses no web tool, builds no URL from the ledger, adds no ledger entry, prints a redacted record | a regex or `tool_used` guard (3), plus one `llm` grader |
-| `unprompted-*` | 32: the one-way and control plans above, asking for a piece of the work instead of a review; 12 `tuning`, 20 `held out` | fires the check and stops before the work on a hard-to-undo plan; at most a four-line go on a reversible one | `triggered`, `engaged` or `no-escalation` (1) |
+| `unprompted-*` | 38: the one-way and control plans above, asking for a piece of the work instead of a review (12 `tuning`, 20 `held out`), and 6 routine releases (`release`) | fires the check and stops before the work on a hard-to-undo plan; at most a four-line go on a reversible one | `triggered`, `engaged` or `no-escalation` (1) |
 
 ## Before running
 
 - The plugin must load from the repository root: `.claude-plugin/plugin.json` and the skills under `skills/`. Check with `claude plugin validate .`.
 - Claude Code 2.1.269 or later. The suite was written against 2.1.296, whose schema it follows.
-- Every agent run and every judge call is billed to your plan. A full run is 510 agent runs (85 cases × 3 runs × 2 arms) and about 4,150 judge calls (231 LLM graders × 6 runs × 3 votes, less the one `with-only` LLM grader's without-arm runs). One case in the quick loop is one run and about 15 judge calls.
+- Every agent run and every judge call is billed to your plan. A full run is 546 agent runs (91 cases × 3 runs × 2 arms) and about 4,150 judge calls (231 LLM graders × 6 runs × 3 votes, less the one `with-only` LLM grader's without-arm runs). One case in the quick loop is one run and about 15 judge calls.
 - Run the commands from the repository root (the plugin root).
 
 ## Running

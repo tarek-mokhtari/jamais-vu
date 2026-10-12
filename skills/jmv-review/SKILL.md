@@ -4,7 +4,7 @@ description: Use only when the user asks to review a decision recorded by jamais
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # jamais-vu review
@@ -45,7 +45,7 @@ A sound decision with a bad outcome and an unknowable cause is bad luck: no ledg
 `hit` if the actual cause was among the recorded risks, `partial` if a neighbouring risk was, `miss` if it was knowable and not listed, `unknowable` otherwise, `none` if the decision was never checked. One line, with the risk id when it is a hit.
 
 ### 5. Forecasts
-Reveal the kit's sealed estimate. If `forecast_kit` reads `sealed:` followed by four base64 characters or fewer that decode to a whole number from 0 to 100, decode it; otherwise say the field is malformed and do not decode it. In one line, put the user's forecast, revised forecast and the kit's estimate next to the outcome. Only when ten or more records have forecasts and an outcome, add a summary: how often outcomes matched forecasts in each band (for example 60–80 %), whether the forecasts tend to be over- or under-confident, whether the premortem moved forecasts toward the outcome or only toward pessimism, and how the kit's estimates compare. Fewer than ten: say how many more resolved records are needed; a handful of decisions is noise.
+Reveal the kit's sealed estimate. If `forecast_kit` reads `sealed:` followed by four base64 characters or fewer that decode to a whole number from 0 to 100, decode it; if it reads `none (no fresh context)`, say the check made no blind estimate; otherwise say the field is malformed and do not decode it. In one line, put the user's forecast, revised forecast and the kit's estimate next to the outcome. Only when ten or more records have forecasts and an outcome, add a summary: how often outcomes matched forecasts in each band (for example 60–80 %), whether the forecasts tend to be over- or under-confident, whether the premortem moved forecasts toward the outcome or only toward pessimism, and how the kit's estimates compare. Fewer than ten: say how many more resolved records are needed; a handful of decisions is noise.
 
 ### 6. Propose ledger edits (at most two)
 Possible edits: add an entry, raise or lower a weight, reword an entry so its trigger is easier to recognize, retire an entry (with `retire_when`). Each proposal gives its reason and passes the capture gate (non-obvious, durable, material). An entry dismissed as handled three times or more is a candidate for rewording or retiring. Redact names; a quote in the user's own words is optional. Ask the user to approve, edit or drop each one; apply nothing without a yes. Proposing no edit is a valid result.
