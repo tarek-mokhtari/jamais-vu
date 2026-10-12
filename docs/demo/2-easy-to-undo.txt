@@ -1,4 +1,4 @@
-# Case control-c-05, with the kit (evals/final/with-control-v3.json; Sonnet 5.5, 12 October 2026).
+# Case control-c-05, with the kit (eval run of 12 October 2026, Sonnet 5.5).
 # The plan keeps whole sentences of evals/control-c-05/prompt.md, without its FORECAST line: on an
 # easy-to-undo call the check asks nothing. The answer is the run's complete output.
 To store each user's preferred time zone, I want to add a nullable timezone text column to the users table in our production Postgres 15 database. If we change our minds, dropping the column is another one-line migration. Anything that should stop me running it at 10:00?
