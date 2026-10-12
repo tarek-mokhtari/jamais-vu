@@ -1,10 +1,10 @@
 # jamais-vu
 
-*Jamais vu* (French for "never seen", pronounced zha-MAY-voo) is the opposite of déjà vu. Déjà vu makes something new feel familiar; jamais vu makes something familiar feel new. That is how costly decisions repeat: you have been here before, it just does not feel like it.
+*Jamais vu* (French for "never seen", pronounced zha-MAY-voo) is the opposite of déjà vu. Déjà vu makes something new feel familiar; jamais vu makes something familiar feel new. That is how costly decisions repeat: you have been here before, or someone else has and published the post-mortem; it just does not feel like it.
 
-**Most costly calls have been made before. They just feel new.**
+**Most costly calls have been made before, by you or by others. They just feel new.**
 
-jamais-vu is a premortem that remembers. Before a call that is hard to undo, it checks the plan against a private ledger of your own past costly decisions and opens with the cheapest test that could kill it; an easy-to-undo call gets "Go." in four lines, and your agent carries on.
+jamais-vu is a premortem that remembers. Before a call that is hard to undo, even one you did not ask it to check, it checks the plan against failure patterns drawn from decision research and public post-mortems, and against your own past costly decisions once you have recorded a few in a private ledger. It opens with the cheapest test that could kill the plan; an easy-to-undo call gets "Go." in four lines, and your agent carries on.
 
 <p align="center"><img src="docs/demo-hard.svg" alt="A hard-to-undo call: wiping a database's data directory alone, late in an incident. The kit asks two forecast questions; once they are answered, it replies with a three-minute test, a risk that cites the user's own ledger and quotes the plan, and a tripwire." width="100%"></p>
 
@@ -33,7 +33,7 @@ Experienced engineers rarely repeat a costly decision for lack of knowledge: the
 /plugin marketplace add https://github.com/tarek-mokhtari/jamais-vu
 /plugin install jamais-vu@jamais-vu
 ```
-It works with an empty ledger: describe your next decision, or call `/jamais-vu:jmv-check`. Run `/jamais-vu:jmv-setup` when you have ten minutes, so checks can cite your own history. No hooks, nothing running in the background: your agent loads the check when your message matches it (asking to poke holes in a plan, or about to delete or migrate data, change a format or an API, launch a long run, pick a vendor), and you can always call it yourself.
+It works with an empty ledger: describe your next decision, or call `/jamais-vu:jmv-check`. Run `/jamais-vu:jmv-setup` when you have ten minutes, so checks can cite your own history. No hooks, nothing running in the background: your agent loads the check when your message matches it (asking to check a plan, or about to take a hard-to-undo step: delete data, change a format, schema or API, ship a release, launch a long run, pick a vendor, even when you only ask for the commands or the release notes), and you can always call it yourself.
 
 Optional: to stop the prompts for the kit's folder, and only that folder, merge this into `~/.claude/settings.json`:
 ```json
