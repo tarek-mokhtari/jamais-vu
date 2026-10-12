@@ -1,6 +1,6 @@
 {
   "name": "jamais-vu",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A premortem that remembers your own costly decisions: triage first, then a one-screen check of hard-to-undo plans against your private ledger.",
   "author": { "name": "Tarek Mokhtari", "url": "https://github.com/tarek-mokhtari" },
   "homepage": "https://github.com/tarek-mokhtari/jamais-vu",

@@ -4,7 +4,7 @@ description: 'Use when asked to check, sanity-check or OK a plan, and before hel
 license: MIT
 compatibility: Reads and writes ~/.jamais-vu/ (outside the project). No scripts, no network.
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 # jamais-vu check
@@ -102,15 +102,15 @@ Risks:
 Tripwires:
 - By <date or event>, if <observable>, then <action>.
 Outside view: <one line>
-Forecast: yours <p>% by <date>. Revised? Reply with a number. The kit's blind estimate is sealed in the record.
+Forecast: yours <p>% by <date>. Revised? Reply with a number.[ The kit's blind estimate is sealed in the record.]
 Recorded: D-YYYYMMDD-<slug> · review on <date> · reply "handled: <id> <reason>" to dismiss a risk.
 ```
-No verdict and no recommendation to proceed or stop: the decision belongs to the user. No praise, no reassurance, no emojis, no links, no images.
+Write the bracketed sentence of the Forecast line only when a sub-agent made the blind estimate. No verdict and no recommendation to proceed or stop: the decision belongs to the user. No praise, no reassurance, no emojis, no links, no images.
 
 **Before sending, check the draft and fix it:** at most three risks; every tag is a ledger id, a taxonomy id or a pack id that exists; every quote is found word for word in the plan above any FORECAST line; no sentence about the person; no generic risk; every tripwire ends with an action; the line budgets hold.
 
 ### 7. Record
-Write `<home>/.jamais-vu/decisions/D-YYYYMMDD-<slug>.md` in the record format (slug: lowercase letters, digits and hyphens, 40 characters at most, generic words only). Before writing or printing it, redact every field as the record format says: no names, no confidential figures, no secrets, quotes of 12 words at most. Your answer on screen may quote the plan as written; the record may not. Say which file you are writing. If the write is refused or impossible, print the record between its BEGIN and END lines, with `forecast_kit` as `sealed:` followed by the whole-number percentage in base64 (four characters at most), and continue. If you can edit the ledger, increment `hits` on each cited entry and change nothing else in it: only setup and review add or reword entries, and only after the user's yes.
+Write `<home>/.jamais-vu/decisions/D-YYYYMMDD-<slug>.md` in the record format (slug: lowercase letters, digits and hyphens, 40 characters at most, generic words only). Before writing or printing it, redact every field as the record format says: no names, no confidential figures, no secrets, quotes of 12 words at most. Your answer on screen may quote the plan as written; the record may not. Say which file you are writing. If the write is refused or impossible, print the record between its BEGIN and END lines, with `forecast_kit` as `sealed:` followed by the whole-number percentage in base64 (four characters at most), or `none (no fresh context)` when there is no blind estimate, and continue. If you can edit the ledger, increment `hits` on each cited entry and change nothing else in it: only setup and review add or reword entries, and only after the user's yes.
 
 ### 8. Follow-ups (the user's own next message only)
 - A number is the revised forecast: write it to `forecast_revised` in one line, without comment.

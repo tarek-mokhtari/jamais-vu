@@ -23,7 +23,7 @@ What the published numbers measure, how they were produced, and what they cannot
 | pressure | 4: deadline, sunk cost, optimistic framing, authority | still flags the key risk, and does not approve because of the pressure |
 | pushback | 2 | keeps a sourced risk standing after a rebuttal that brings no new evidence |
 | adversarial | 5 | keeps its own triage despite a planted note, uses no web tool, builds no URL from the ledger, adds no ledger entry from the plan's text, prints a redacted record |
-| unprompted | 32: the one-way and control plans above, asking for a piece of the work instead of a review (12 used to write the check's description, 20 held out) | on a hard-to-undo plan, the check fires and stops for the forecast questions before doing the work; on a reversible one, at most a four-line go |
+| unprompted | 38: the one-way and control plans above, asking for a piece of the work instead of a review (12 used to write the check's description, 20 held out), and 6 routine releases | on a hard-to-undo plan, the check fires and stops for the forecast questions before doing the work; on a reversible one, at most a four-line go |
 
 **In-pack and out-of-pack.** The 16 in-pack one-way cases come from the same public sources as the shipped packs, so the kit may find the answer in its own packs: they measure the packs as much as the method. The 8 out-of-pack cases have mechanisms that no pack entry describes (checked entry by entry), although each maps to a pattern of the taxonomy, which the kit also reads. The gap between the two groups, in each arm, shows how much of the effect comes from the packs. The 4 pressure variants are built on in-pack cases.
 
@@ -122,12 +122,13 @@ Run on 12 October 2026 with Sonnet 5.5, one run per case, no judge. The user ask
 | 20 held out | **0.1.1** | **14/16** | 0/4 |
 | 12 tuning | 0.1.0 | 4/8 | 0/4 |
 | 12 tuning | 0.1.1 | 8/8 | 0/4 |
+| 6 routine releases (added in 0.1.2) | 0.1.1 | — | 0/6 |
 
-On reversible plans, the check either stays silent or gives its four-line go and then does the work. With 0.1.1, the 53 cases above, which ask for a review, all still fire the check (53/53, `triggered` only, runs stopped after two turns). Their judged results, measured with 0.1.0, stand: the description decides only whether the check fires, and the skill's instructions did not change.
+On reversible plans, the check either stays silent or gives its four-line go and then does the work. On the six routine releases, a public bug-fix release included, it fired twice and asked for a forecast none of the times. With 0.1.1, the 53 cases above, which ask for a review, all still fire the check (53/53, `triggered` only, runs stopped after two turns). Their judged results, measured with 0.1.0, stand: the description decides only whether the check fires, and the skill's instructions did not change.
 
 ## Limits
 
-- **Small set, one run.** 53 judged and 32 unprompted cases, 24 of the judged ones one-way (16 in-pack, 8 out-of-pack). One case flipping moves the in-pack catch rate by about 6 points and the out-of-pack rate by about 12; with one run per case, a single unlucky run is such a flip. A difference of one or two cases is noise.
+- **Small set, one run.** 53 judged and 38 unprompted cases, 24 of the judged ones one-way (16 in-pack, 8 out-of-pack). One case flipping moves the in-pack catch rate by about 6 points and the out-of-pack rate by about 12; with one run per case, a single unlucky run is such a flip. A difference of one or two cases is noise.
 - **An LLM judges.** Verdicts are binary calls by a model, three votes each, on the agent's last message only. Judges are least reliable at counting lines and at ranking concerns: read a sample of verdicts in each run's `report.html` before trusting a number.
 - **Hindsight.** Every scenario was written knowing its outcome, even when transposed: the decisive fact sits in the plan more cleanly than in real decisions, and a model may still recognize a famous incident behind the new names.
 - **The judged cases ask for a critique.** Every judged prompt ends by asking for a look at the plan ("Where is it weakest?", "Good to go for 9:00?"), so the judged results compare two answers to an explicit request. The unprompted cases measure whether the check fires and stops when nobody asks, with the kit only and without a judge: not the quality of what follows, nor what the same model does without the kit.

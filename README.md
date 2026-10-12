@@ -124,7 +124,7 @@ No study tests this combination, and most effects are small to moderate, measure
 
 The model already finds the flaws when asked; the kit adds the moment (it triggers when a decision does not look like one: on 14 of 16 hard-to-undo plans where the user asked only for the work, against 4 of 16 before v0.1.1; [details](docs/evals.md#unprompted)), the memory (your own past calls) and the form (a test, tripwires, one screen). The one reversible case it escalated touched a shared database's connection limit, which we count as a miss.
 
-The numbers come from written scenarios that ask for a critique, judged by a model, with and without the kit: they show whether a check finds what sank a plan, keeps its form and spares sound plans, and, in 32 more cases with no request for a review, whether the check fires on its own; not whether it improves real decisions. Method and limits: [docs/evals.md](docs/evals.md).
+The numbers come from written scenarios that ask for a critique, judged by a model, with and without the kit: they show whether a check finds what sank a plan, keeps its form and spares sound plans, and, in 38 more cases with no request for a review, whether the check fires on its own; not whether it improves real decisions. Method and limits: [docs/evals.md](docs/evals.md).
 
 ## Packs and teams
 
